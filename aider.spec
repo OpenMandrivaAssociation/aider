@@ -9,7 +9,9 @@ Source0:	https://files.pythonhosted.org/packages/source/a/aider-chat/aider_chat-
 Patch0:		0001-allow-python-3.14.patch
 BuildArch:	noarch
 # Exact pins in METADATA would require PyPI versions cooker does not ship.
-%global __requires_exclude ^python[0-9.]*dist\\(
+# Rich deps look like "(python3.14dist(foo) < 9 with ...)" so do not
+# anchor at start-of-string.
+%global __requires_exclude python[0-9.]*dist
 BuildRequires:	python
 BuildRequires:	pkgconfig(python)
 BuildRequires:	python%{pyver}dist(pip)
@@ -48,9 +50,17 @@ Requires:	python%{pyver}dist(socksio)
 Requires:	python%{pyver}dist(pyperclip)
 Requires:	python%{pyver}dist(httpx)
 Requires:	python%{pyver}dist(openai)
+Requires:	python%{pyver}dist(litellm)
+Requires:	python%{pyver}dist(tiktoken)
+Requires:	python%{pyver}dist(grep-ast)
+Requires:	python%{pyver}dist(sounddevice)
+Requires:	python%{pyver}dist(importlib-resources)
+Requires:	python%{pyver}dist(posthog)
+Requires:	python%{pyver}dist(mixpanel)
 Recommends:	llama-cpp-server
 Recommends:	ollama
 Recommends:	git-core
+Recommends:	pkgconfig(portaudio-2.0)
 
 %description
 Aider is a terminal pair-programmer that edits a git repo with an
@@ -61,9 +71,10 @@ llama-server and Ollama:
   export OPENAI_API_KEY=local
   aider --model openai/local
 
-Some optional features (browser, voice, repo-map via grep-ast,
-litellm extras) need extra Python modules that are not all packaged
-yet.
+LiteLLM, grep-ast (repo-map), voice (sounddevice), and the
+telemetry modules are packaged as system Python modules. The
+Streamlit/Playwright browser extras are not: they pull a separate
+web stack and download browser binaries.
 
 %prep
 %autosetup -p1 -n aider_chat-%{version}
