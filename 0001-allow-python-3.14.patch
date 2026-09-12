@@ -1,5 +1,5 @@
---- a/pyproject.toml
-+++ b/pyproject.toml
+--- a/pyproject.toml	2026-02-12 01:42:34.000000000 +0100
++++ b/pyproject.toml	2026-09-12 22:43:30.926319639 +0200
 @@ -15,7 +15,7 @@
      "Programming Language :: Python",
      "Topic :: Software Development",
@@ -7,3 +7,5 @@
 -requires-python = ">=3.10,<3.13"
 +requires-python = ">=3.10"
  dynamic = ["dependencies", "optional-dependencies", "version"]
+ 
+ [project.urls]
