@@ -20,7 +20,9 @@ BuildRequires:	python%{pyver}dist(setuptools-scm)
 BuildRequires:	python%{pyver}dist(wheel)
 Requires:	python
 Requires:	python%{pyver}dist(configargparse)
-Requires:	python%{pyver}dist(gitpython)
+# GitPython + gitdb + smmap live in cooker extra, so extra tests
+# on main cannot resolve a hard Requires.
+Recommends:	python%{pyver}dist(gitpython)
 Requires:	python%{pyver}dist(jsonschema)
 Requires:	python%{pyver}dist(rich)
 Requires:	python%{pyver}dist(prompt-toolkit)
